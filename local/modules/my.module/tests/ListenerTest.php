@@ -9,6 +9,23 @@ class ListenerTest extends PHPUnit_Framework_TestCase
 {
     protected $backupGlobals = false;
 
+	public function testAuthFailure()
+    {
+	    global $USER;
+	    $arCurID = \MyModule\ExampleTable::getList(array(
+		     'select' =>array('ID'),
+		     'order' => array('ID' =>'DESC'),
+			 'limit' => 1
+		))->Fetch();
+		$arCurID["ID"]++;
+		
+		$res = $USER->Login("test", "randompass");
+		$USER->Logout();
+		$arSuccess = \MyModule\ExampleTable::getById($arCurID["ID"])->Fetch();
+		$this->assertTrue((isset($arSuccess["SUCCESS"])&&($arSuccess["SUCCESS"]==false)),'Success false is wrong');
+		
+    }
+    
     public function testAuthSuccess()
     {
 	    global $USER;
@@ -27,21 +44,6 @@ class ListenerTest extends PHPUnit_Framework_TestCase
 		
     }
     
-    public function testAuthFailure()
-    {
-	    global $USER;
-	    $arCurID = \MyModule\ExampleTable::getList(array(
-		     'select' =>array('ID'),
-		     'order' => array('ID' =>'DESC'),
-			 'limit' => 1
-		))->Fetch();
-		$arCurID["ID"]++;
-		
-		$res = $USER->Login("test", "randompass");
-		$USER->Logout();
-		$arSuccess = \MyModule\ExampleTable::getById($arCurID["ID"])->Fetch();
-		$this->assertTrue((isset($arSuccess["SUCCESS"])&&($arSuccess["SUCCESS"]==false)),'Success false is wrong');
-		
-    }
+    
     
 }
