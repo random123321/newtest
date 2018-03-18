@@ -31,8 +31,9 @@ class ListenerAutorize
 			    break;
 			case 'main_OnUserLogin':
 				$params = $e->getParams();
-		        $sm = Registry::getServiceManager();
+				$sm = Registry::getServiceManager();
 			    $objAuth = $sm->get('fatModel');
+			    $objAuth->setlogin($params[1]["user_fields"]["LOGIN"]);
 			    $objAuth->clearFlg();
 	    }
         

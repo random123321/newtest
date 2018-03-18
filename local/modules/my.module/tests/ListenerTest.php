@@ -1,6 +1,6 @@
 <?php
 
-namespace Rzn\Library\Tests;
+namespace MyModule\Tests;
 use Rzn\Library\Registry;
 use Bitrix\Main\Loader;
 use PHPUnit_Framework_TestCase;

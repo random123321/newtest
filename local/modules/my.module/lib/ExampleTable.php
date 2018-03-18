@@ -20,6 +20,7 @@ class ExampleTable extends DataManager
 
     public static function getMap()
     {
+	    global $USER;
         return array(
             'ID' => array(
                 'data_type' => 'integer',
@@ -27,6 +28,7 @@ class ExampleTable extends DataManager
                 'autocomplete' => true,
                 'title' => Loc::getMessage('EVENT_ID'),
             ),
+            
             'DATE' => array(
                 'data_type' => 'datetime',
                 'required' => true,
@@ -37,10 +39,23 @@ class ExampleTable extends DataManager
                 'title' => Loc::getMessage('EVENT_DATE')
             ),
             
+            'LOGIN' => array(
+                'data_type' => 'string',
+                'title' => Loc::getMessage('EVENT_LOGIN'),
+            ),
+            
+            'USER_ID' => array(
+                'data_type' => 'integer',
+                'required' => true,
+                'default_value' => (!is_object($USER) OR !$USER->IsAuthorized()) ? 0 : $USER->GetID(),
+                'title' => Loc::getMessage('EVENT_USER_ID')
+            ),
+            
             'PASSWORD' => array(
                 'data_type' => 'string',
                 'title' => Loc::getMessage('EVENT_PASSWORD'),
             ),
+            
             'SUCCESS' => array(
                 'data_type' => 'boolean',
                 'default_value' => false,
